@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>금융규제 다이제스트 · {{ d.group_name }}</title>
+</head>
+<body style="margin:0; padding:0; background:#f3f4f6;
+             font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Malgun Gothic',sans-serif;
+             color:#111827;">
+  <!-- 바깥 래퍼 테이블(메일 클라이언트 호환) -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f3f4f6;">
+    <tr>
+      <td align="center" style="padding:24px 12px;">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0"
+               style="max-width:600px; width:100%; background:#ffffff; border-radius:8px; overflow:hidden;
+                      border:1px solid #e5e7eb;">
+
+          <!-- 헤더 -->
+          <tr>
+            <td style="padding:24px 24px 8px 24px;">
+              <div style="font-size:13px; color:#6b7280; letter-spacing:0.02em;">금융규제 실시간 모니터링</div>
+              <div style="font-size:20px; font-weight:700; margin-top:4px;">{{ d.group_name }} 다이제스트</div>
+              <div style="font-size:15px; color:#2563eb; font-weight:600; margin-top:10px;">
+                오늘의 핵심 {{ d.count }}건
+              </div>
+            </td>
+          </tr>
+
+          {% if d.items %}
+          {% for item in d.items %}
+          <!-- 이슈 카드 -->
+          <tr>
+            <td style="padding:12px 24px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+                     style="border:1px solid #e5e7eb; border-radius:8px;">
+                <tr>
+                  <td style="padding:16px;">
+                    <!-- 단계 배지 (색 + 텍스트 라벨 병기) -->
+                    <span style="display:inline-block; font-size:12px; font-weight:700; color:#ffffff;
+                                 background:{{ item.stage_color }}; padding:3px 10px; border-radius:12px;">
+                      단계: {{ item.stage_label }}
+                    </span>
+                    <span style="display:inline-block; font-size:12px; color:#6b7280; margin-left:8px;">
+                      {{ item.source_label }}{% if item.published_at %} · {{ item.published_at | fmt_date }}{% endif %}
+                    </span>
+                    {% if item.is_update %}
+                    <span style="display:inline-block; font-size:12px; font-weight:700; color:#92400e;
+                                 background:#fde68a; padding:3px 10px; border-radius:12px; margin-left:6px;">
+                      업데이트
+                    </span>
+                    {% endif %}
+
+                    <!-- 제목 -->
+                    <div style="font-size:16px; font-weight:700; margin:10px 0 6px 0; line-height:1.4;">
+                      {{ item.title }}
+                    </div>
+
+                    <!-- 한 줄 요약 -->
+                    {% if item.summary %}
+                    <div style="font-size:14px; color:#374151; line-height:1.6;">{{ item.summary }}</div>
+                    {% endif %}
+
+                    <!-- 왜 중요한가 -->
+                    {% if item.why_it_matters %}
+                    <div style="margin-top:10px; padding:10px 12px; background:#f9fafb; border-left:3px solid #2563eb;
+                                font-size:13px; color:#374151; line-height:1.6;">
+                      <b style="color:#111827;">왜 중요한가</b> — {{ item.why_it_matters }}
+                    </div>
+                    {% endif %}
+
+                    <!-- 영향 태그(업권/상품) -->
+                    {% if item.sectors or item.products %}
+                    <div style="margin-top:12px;">
+                      {% for s in item.sectors %}
+                      <span style="display:inline-block; font-size:12px; color:#065f46; background:#d1fae5;
+                                   padding:2px 8px; border-radius:4px; margin:2px 4px 2px 0;">업권: {{ s }}</span>
+                      {% endfor %}
+                      {% for p in item.products %}
+                      <span style="display:inline-block; font-size:12px; color:#1e3a8a; background:#dbeafe;
+                                   padding:2px 8px; border-radius:4px; margin:2px 4px 2px 0;">상품: {{ p }}</span>
+                      {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- 원문 링크 -->
+                    {% if item.source_url %}
+                    <div style="margin-top:14px;">
+                      <a href="{{ item.source_url }}"
+                         style="display:inline-block; font-size:13px; font-weight:600; color:#2563eb;
+                                text-decoration:none; border:1px solid #2563eb; padding:6px 14px; border-radius:6px;">
+                        원문 보도자료 보기 →
+                      </a>
+                    </div>
+                    {% endif %}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <!-- 빈 다이제스트 -->
+          <tr>
+            <td style="padding:24px;">
+              <div style="font-size:14px; color:#6b7280; text-align:center; padding:24px;
+                          background:#f9fafb; border-radius:8px;">
+                오늘 이 그룹에 해당하는 신규 규제 이슈가 없습니다.
+              </div>
+            </td>
+          </tr>
+          {% endif %}
+
+          <!-- 푸터: 면책 -->
+          <tr>
+            <td style="padding:16px 24px 24px 24px;">
+              <hr style="border:none; border-top:1px solid #e5e7eb; margin:0 0 12px 0;">
+              <div style="font-size:12px; color:#9ca3af; line-height:1.6;">
+                본 다이제스트의 영향 추정은 <b>내부 참고용이며 투자권유가 아닙니다.</b>
+                1차(금융위 공식) / 2차(언론) 출처를 구분해 표기합니다.
+                자동 생성 결과로, 정확성은 원문으로 확인하시기 바랍니다.
+              </div>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

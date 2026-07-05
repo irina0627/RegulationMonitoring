@@ -1,0 +1,37 @@
+# 웹/API (헤드리스 운영·관리용)
+fastapi
+uvicorn
+
+# DB / ORM / 마이그레이션
+sqlalchemy
+alembic
+psycopg2-binary
+
+# 설정
+pydantic-settings
+
+# 수집 / 파싱
+httpx
+feedparser
+beautifulsoup4
+lxml
+pdfplumber
+pymupdf
+pyhwp
+six          # pyhwp 런타임 의존성(자동 설치되지 않아 명시)
+
+# 스케줄러
+apscheduler
+
+# 이메일
+jinja2
+aiosmtplib
+
+# LLM (OpenAI, 기본 모델 gpt-4o-mini) — nlp/ 어댑터 뒤에서만 사용
+openai
+
+# 설정 파일 로딩
+pyyaml
+
+# 테스트
+pytest

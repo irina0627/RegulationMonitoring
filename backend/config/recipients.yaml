@@ -1,0 +1,37 @@
+# 수신자 그룹 시드 (설계서 8·10.2)
+# groups[].filters 는 이슈 엔터티(affects 업권·상품, handled_by 부서)·키워드와 매칭된다.
+# 이 파일은 시드 로더로 recipient_group/recipient 테이블에 멱등 적재된다.
+# (이메일 주소는 예시 — 실제 운영 시 교체)
+
+groups:
+  - name: 파생업권
+    active: true
+    filters:
+      sectors: [증권]
+      products: [ELS, ELB, DLS, CFD, 랩]
+      depts: []
+      keywords: [파생, 주가연계]
+    recipients:
+      - { email: deriv.lead@example.com, name: 파생데스크 팀장 }
+      - { email: deriv.analyst@example.com, name: 파생 애널리스트 }
+
+  - name: 리테일상품부
+    active: true
+    filters:
+      sectors: [은행, 보험, 카드·여전]
+      products: [펀드, IRP/연금, 채권]
+      depts: []
+      keywords: [소비자, 판매, 서민금융]
+    recipients:
+      - { email: retail.pm@example.com, name: 리테일 PM }
+      - { email: retail.ops@example.com, name: 리테일 운영 }
+
+  - name: 컴플라이언스
+    active: true
+    filters:
+      sectors: []
+      products: []
+      depts: []
+      keywords: [제재, 검사, 고발, 위반, 과태료, 감독규정, 혐의]
+    recipients:
+      - { email: compliance@example.com, name: 컴플라이언스 담당 }

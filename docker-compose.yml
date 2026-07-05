@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:15
+    container_name: fsc_monitor_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-fsc_monitor}
+      POSTGRES_USER: ${POSTGRES_USER:-fsc}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-fsc_password}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-fsc} -d ${POSTGRES_DB:-fsc_monitor}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:
