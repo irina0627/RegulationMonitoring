@@ -48,7 +48,17 @@
       "Bash(PYTHONPATH=. ./.venv/bin/pytest tests/test_digest_runner.py -v)",
       "Bash(kill 62341)",
       "Bash(kill 62717)",
-      "Bash(PYTHONPATH=. ./.venv/bin/pytest tests/test_nlp.py -q)"
+      "Bash(PYTHONPATH=. ./.venv/bin/pytest tests/test_nlp.py -q)",
+      "Bash(grep -E \"\\\\.env$|\\\\.env\\\\.\")",
+      "Bash(gh --version)",
+      "Bash(gh auth *)",
+      "Bash(git credential-osxkeychain *)",
+      "Bash(git config *)",
+      "Bash(git push *)",
+      "Bash(grep -vE \"^remote: $\")",
+      "Bash(git reset *)",
+      "Bash(grep -E \"^\\\\.env$\")",
+      "Bash(xargs -I{} echo \"시크릿 매칭 라인 수: {} \\(0이어야 안전\\)\")"
     ]
   }
 }
